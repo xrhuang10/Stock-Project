@@ -1,3 +1,3 @@
-print('Hello world')
+print('wassup')
 print('hi')
 print('dean')
