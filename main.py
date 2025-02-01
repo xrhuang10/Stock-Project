@@ -25,16 +25,18 @@ dataframe = dataframe.astype(float)  # Convert values to numeric
 dataframe.index = pd.to_datetime(dataframe.index)  # Convert index to datetime
 dataframe = dataframe.sort_index()  # Sort by date
 
-# Print DataFrame details
-size = len(dataframe)
-print(dataframe.iloc[1300:1317])  # Print specific rows
+print(dataframe)
 
-# Get the latest stock price
-latest_time = dataframe.index[-1]  # Get the most recent date
-latest_price = dataframe.loc[latest_time, "1. open"]
+# # Print DataFrame details
+# size = len(dataframe)
+# print(dataframe.iloc[1300:1317])  # Print specific rows
 
-prices = dataframe["4. close"]
+# # Get the latest stock price
+# latest_time = dataframe.index[-1]  # Get the most recent date
+# latest_price = dataframe.loc[latest_time, "1. open"]
 
-print(f"Latest {stock_symbol} stock price (weekly open): ${latest_price:.2f}")
+# prices = dataframe["4. close"]
 
-print(f"API Key: {api_key}")  # Debugging API key (Remove if sensitive)
+# print(f"Latest {stock_symbol} stock price (weekly open): ${latest_price:.2f}")
+
+# print(f"API Key: {api_key}")  # Debugging API key (Remove if sensitive)
