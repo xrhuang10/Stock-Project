@@ -6,24 +6,35 @@ import pandas as pd
 
 load_dotenv()
 
-api_key = os.getenv("alpha_vantage_key")
+api_key = os.getenv("tiingo_key")
 stock_symbol = "AAPL"
 
-url = f"https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol={stock_symbol}&apikey={api_key}"
+url = f"https://api.tiingo.com/tiingo/daily/{stock_symbol}/prices?startDate=2012-1-1&endDate=2016-1-1"
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Token {api_key}"
+}
 
 # Make the request
-response = requests.get(url)
+response = requests.get(url, headers = headers)
 
-# Convert to JSON
-data = response.json()
+if response.status_code == 200:
+    data = response.json()
 
-time_series = data.get("Weekly Time Series", {})
+    # Convert list of dictionaries to DataFrame
+    dataframe = pd.DataFrame(data)
 
-# Convert to DataFrame
-dataframe = pd.DataFrame.from_dict(time_series, orient="index")
-dataframe = dataframe.astype(float)  # Convert values to numeric
-dataframe.index = pd.to_datetime(dataframe.index)  # Convert index to datetime
-dataframe = dataframe.sort_index()  # Sort by date
+    # Convert date column to datetime and set as index
+    dataframe["date"] = pd.to_datetime(dataframe["date"])
+    dataframe.set_index("date", inplace=True)
+
+    # Convert numerical columns to float
+    numeric_columns = ["open", "high", "low", "close", "volume"]
+    dataframe[numeric_columns] = dataframe[numeric_columns].astype(float)
+
+    # Sort by date
+    dataframe = dataframe.sort_index()
 
 print(dataframe)
 
