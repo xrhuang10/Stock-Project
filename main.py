@@ -7,7 +7,7 @@ import pandas as pd
 load_dotenv()
 
 api_key = os.getenv("tiingo_key")
-stock_symbol = "AAPL"
+stock_symbol = "TSLA"
 
 url = f"https://api.tiingo.com/tiingo/daily/{stock_symbol}/prices?startDate=2012-1-1&endDate=2016-1-1"
 
