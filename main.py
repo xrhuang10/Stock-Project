@@ -3,11 +3,13 @@ from dotenv import load_dotenv, dotenv_values
 import requests
 import json
 import pandas as pd
+import numpy as np
 
 load_dotenv()
 
 api_key = os.getenv("tiingo_key")
 stock_symbol = "TSLA"
+regression_type = "polynomial"
 
 url = f"https://api.tiingo.com/tiingo/daily/{stock_symbol}/prices?startDate=2012-1-1&endDate=2016-1-1"
 
@@ -36,18 +38,8 @@ if response.status_code == 200:
     # Sort by date
     dataframe = dataframe.sort_index()
 
-print(dataframe)
+training_data = dataframe["high"].values
+print(training_data)
 
-# # Print DataFrame details
-# size = len(dataframe)
-# print(dataframe.iloc[1300:1317])  # Print specific rows
+export_csv = dataframe.to_csv (r'export_dataframe.csv', index = None, header=True) #Don't forget to add '.csv' at the end of the path
 
-# # Get the latest stock price
-# latest_time = dataframe.index[-1]  # Get the most recent date
-# latest_price = dataframe.loc[latest_time, "1. open"]
-
-# prices = dataframe["4. close"]
-
-# print(f"Latest {stock_symbol} stock price (weekly open): ${latest_price:.2f}")
-
-# print(f"API Key: {api_key}")  # Debugging API key (Remove if sensitive)
