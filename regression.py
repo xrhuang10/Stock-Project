@@ -59,3 +59,4 @@ elif regression_type == 'polynomial':
     plt.ylabel('High')
     plt.legend()
     plt.show()
+print('successful commit')
